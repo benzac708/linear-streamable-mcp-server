@@ -513,9 +513,7 @@ describe('update_comments tool', () => {
         items: [{ id: 'comment-001', body: '' }],
       });
       expect(result.success).toBe(false);
-    });
-
-    it('accepts valid update', () => {
+    });    it('accepts valid update', () => {
       const result = updateCommentsTool.inputSchema.safeParse({
         items: [{ id: 'comment-001', body: 'Updated content' }],
       });
@@ -530,12 +528,8 @@ describe('update_comments tool', () => {
           items: [{ id: 'comment-001', body: 'Updated comment body' }],
         },
         baseContext,
-      );
-
-      expect(result.isError).toBeFalsy();
-      expect(mockClient.updateComment).toHaveBeenCalledWith('comment-001', { body: 'Updated comment body' });
-
-      const structured = result.structuredContent as Record<string, unknown>;
+      );      expect(result.isError).toBeFalsy();
+      expect(mockClient.updateComment).toHaveBeenCalledWith('comment-001', { body: 'Updated comment body' });      const structured = result.structuredContent as Record<string, unknown>;
       const summary = structured.summary as { ok: number; failed: number };
       expect(summary.ok).toBe(1);
     });
@@ -549,17 +543,13 @@ describe('update_comments tool', () => {
           ],
         },
         baseContext,
-      );
-
-      expect(result.isError).toBeFalsy();
+      );      expect(result.isError).toBeFalsy();
       expect(mockClient.updateComment).toHaveBeenCalledTimes(2);
 
       const structured = result.structuredContent as Record<string, unknown>;
       const summary = structured.summary as { ok: number; failed: number };
       expect(summary.ok).toBe(2);
-    });
-
-    it('suggests verifying with list_comments', async () => {
+    });    it('suggests verifying with list_comments', async () => {
       const result = await updateCommentsTool.handler(
         {
           items: [{ id: 'comment-001', body: 'Updated' }],
@@ -572,4 +562,3 @@ describe('update_comments tool', () => {
     });
   });
 });
-

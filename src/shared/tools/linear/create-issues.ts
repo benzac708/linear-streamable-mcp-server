@@ -380,7 +380,14 @@ export const createIssuesTool = defineTool({
 
     const failures = results
       .filter((r) => !r.ok)
-      .map((r) => ({ index: r.index, error: r.error ?? '', code: undefined }));
+      .map((r) => {
+        const err = r.error;
+        if (typeof err === 'object' && err !== null) {
+          const errObj = err as { message?: string; code?: string };
+          return { index: r.index, error: errObj.message ?? String(err), code: errObj.code };
+        }
+        return { index: r.index, error: String(err ?? ''), code: undefined };
+      });
 
     // Compose a richer message with links for created items
     const failureHints: string[] = [];

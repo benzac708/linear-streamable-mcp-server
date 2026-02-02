@@ -13,7 +13,7 @@ import { MemorySessionStore, MemoryTokenStore } from './memory.js';
 
 // Cloudflare KV namespace type
 type KVNamespace = {
-  get(key: string): Promise<string | null>;
+  get(key: string, options?: { cacheTtl?: number }): Promise<string | null>;
   put(
     key: string,
     value: string,
@@ -21,6 +21,10 @@ type KVNamespace = {
   ): Promise<void>;
   delete(key: string): Promise<void>;
 };
+
+// Cache TTL for KV reads (seconds) - reduces actual KV read operations
+// Cloudflare caches at the edge, so repeated reads within this window are free
+const KV_CACHE_TTL_SECONDS = 60; // 1 minute edge cache
 
 type EncryptFn = (plaintext: string) => Promise<string> | string;
 type DecryptFn = (ciphertext: string) => Promise<string> | string;

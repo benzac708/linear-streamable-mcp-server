@@ -464,12 +464,14 @@ export const updateIssuesTool = defineTool({
 
     const failures = results
       .filter((r) => !r.ok)
-      .map((r) => ({
-        index: r.index,
-        id: r.id,
-        error: r.error ?? '',
-        code: undefined,
-      }));
+      .map((r) => {
+        const err = r.error;
+        if (typeof err === 'object' && err !== null) {
+          const errObj = err as { message?: string; code?: string };
+          return { index: r.index, id: r.id, error: errObj.message ?? String(err), code: errObj.code };
+        }
+        return { index: r.index, id: r.id, error: String(err ?? ''), code: undefined };
+      });
 
     const archivedRequested = items.some((x) => typeof x.archived === 'boolean');
 

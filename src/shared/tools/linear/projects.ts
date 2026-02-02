@@ -248,12 +248,14 @@ export const createProjectsTool = defineTool({
     
     const failures = results
       .filter((r) => !r.ok)
-      .map((r) => ({
-        index: r.index,
-        id: undefined,
-        error: r.error ?? '',
-        code: undefined,
-      }));
+      .map((r) => {
+        const err = r.error;
+        if (typeof err === 'object' && err !== null) {
+          const errObj = err as { message?: string; code?: string };
+          return { index: r.index, id: undefined, error: errObj.message ?? String(err), code: errObj.code };
+        }
+        return { index: r.index, id: undefined, error: String(err ?? ''), code: undefined };
+      });
     
     const text = summarizeBatch({
       action: 'Created projects',
@@ -407,12 +409,14 @@ export const updateProjectsTool = defineTool({
     
     const failures = results
       .filter((r) => !r.ok)
-      .map((r) => ({
-        index: r.index,
-        id: r.id,
-        error: r.error ?? '',
-        code: undefined,
-      }));
+      .map((r) => {
+        const err = r.error;
+        if (typeof err === 'object' && err !== null) {
+          const errObj = err as { message?: string; code?: string };
+          return { index: r.index, id: r.id, error: errObj.message ?? String(err), code: errObj.code };
+        }
+        return { index: r.index, id: r.id, error: String(err ?? ''), code: undefined };
+      });
     
     const text = summarizeBatch({
       action: 'Updated projects',
