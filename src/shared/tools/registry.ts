@@ -19,6 +19,7 @@ import {
   listProjectsTool,
   createProjectsTool,
   updateProjectsTool,
+  createLabelsTool,
   showIssuesUITool,
 } from './linear/index.js';
 import type { ToolContext, ToolResult } from './types.js';
@@ -64,6 +65,8 @@ export const sharedTools: RegisteredTool[] = [
   listProjectsTool as unknown as RegisteredTool,
   createProjectsTool as unknown as RegisteredTool,
   updateProjectsTool as unknown as RegisteredTool,
+  // Linear tools - Labels
+  createLabelsTool as unknown as RegisteredTool,
   // Linear tools - UI
   showIssuesUITool as unknown as RegisteredTool,
 ];

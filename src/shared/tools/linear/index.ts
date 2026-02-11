@@ -22,6 +22,9 @@ export { listCyclesTool } from './cycles.js';
 // Projects
 export { listProjectsTool, createProjectsTool, updateProjectsTool } from './projects.js';
 
+// Labels
+export { createLabelsTool } from './labels.js';
+
 // UI
 export { showIssuesUITool } from './show-issues-ui.js';
 

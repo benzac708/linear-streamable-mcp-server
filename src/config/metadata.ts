@@ -166,6 +166,13 @@ export const toolsMetadata = {
     description:
       'Opens an interactive Linear issues dashboard. The UI displays issues in a dark, minimalistic Linear-style interface where users can browse, filter, and manage issues visually. Inputs: { teamId?, stateType?, assignedToMe? }. Use this when the user wants to see their issues in a visual interface rather than text output.',
   },
+
+  create_labels: {
+    name: 'create_labels',
+    title: 'Create Labels (Batch)',
+    description:
+      "Create multiple labels in one call. Inputs: { items: Array<{ name: string; teamId?: string; color?: string; description?: string }>; parallel? }.\nIf teamId is provided, label is team-scoped; if omitted, label is workspace-level. Use workspace_metadata to find team IDs.\nReturns: per-item results with id. Next: verify with 'workspace_metadata'; use labelNames in create_issues/update_issues.",
+  },
 } as const satisfies Record<string, ToolMetadata>;
 
 /**

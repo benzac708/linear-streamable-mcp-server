@@ -251,6 +251,19 @@ export const UpdateProjectsOutputSchema = CreateProjectsOutputSchema;
 export type UpdateProjectsOutput = z.infer<typeof UpdateProjectsOutputSchema>;
 
 // ─────────────────────────────────────────────────────────────────────────────
+// Label Schemas
+// ─────────────────────────────────────────────────────────────────────────────
+
+export const CreateLabelsOutputSchema = z
+  .object({
+    results: z.array(BatchResultSchema),
+    summary: BatchSummarySchema,
+    meta: MetaSchema.optional(),
+  })
+  .strict();
+export type CreateLabelsOutput = z.infer<typeof CreateLabelsOutputSchema>;
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Cycle Schemas
 // ─────────────────────────────────────────────────────────────────────────────
 
